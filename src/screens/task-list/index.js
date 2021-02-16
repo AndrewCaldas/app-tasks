@@ -1,21 +1,37 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 
 import Greetings from '../../components/greetings';
 import Task from '../../components/task';
 
 export default class TaskList extends Component {
+  state = {
+    tasks: [
+      {
+        id: Math.random(),
+        desc: 'Comprar Livro de React Native',
+        estimateAt: new Date(),
+        doneAt: new Date(),
+      },
+      {
+        id: Math.random(),
+        desc: 'Ler Livro de React Native',
+        estimateAt: new Date(),
+        doneAt: null,
+      },
+    ],
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Greetings priority={1} />
         <View style={styles.taskList}>
-          <Task
-            desc="Comprar livro"
-            estimateAt={new Date()}
-            doneAt={new Date()}
+          <FlatList
+            data={this.state.tasks}
+            keyExtractor={item => `${item.id}`}
+            renderItem={({item}) => <Task {...item} />}
           />
-          <Task desc="Ler livro" estimateAt={new Date()} doneAt={null} />
         </View>
       </View>
     );
