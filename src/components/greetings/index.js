@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import todayImage from '../../assets/imgs/today.jpg';
 import weekImage from '../../assets/imgs/week.jpg';
@@ -26,6 +35,15 @@ const Greetings = props => {
     : todayImage;
   return (
     <ImageBackground source={image} style={styles.background}>
+      <View style={styles.iconBar}>
+        <TouchableOpacity onPress={() => props.toggleFilter()}>
+          <Icon
+            name={props.showDoneTasks ? 'eye' : 'eye-slash'}
+            size={20}
+            color={commonStyles.colors.secondary}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.titleBar}>
         <Text style={styles.title}>Hoje</Text>
         <Text style={styles.subtitle}>{today}</Text>
@@ -55,6 +73,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
     marginBottom: 30,
+  },
+  iconBar: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    justifyContent: 'flex-end',
+    marginTop: Platform.OS === 'ios' ? 40 : 10,
   },
 });
 
